@@ -39,7 +39,7 @@ function game() {
         const computerSelection = getComputerChoice();
         console.log(playRound(playerSelection, computerSelection));
         console.log("Your Choice: " + playerSelection + "\n" + "Computer's Choice: " + computerSelection);
-        if (playRound(playerSelection, computerSelection) == "You Won!") {
+        if (playRound(playerSelection, computerSelection) == "You Won!") { //If the returned message from playRound is 'You Win,' you score for yourself; otherwise, the computer will score.
             yourScore += 1;
         } else if (playRound(playerSelection, computerSelection) == "You Lost!") {
             computerScore += 1;
