@@ -27,35 +27,39 @@ function playRound(playerSelection, computerSelection) {
         return ("Invalid value, enter another value.")
     } 
 
-  }
+}
+
+
 
 function game() {
 
     var yourScore = 0;
     var computerScore = 0;
 
-    for(let i = 1; i <= 5; i+=1){
-        const playerSelection = prompt("Enter a value: ");
-        const computerSelection = getComputerChoice();
+        const buttons = document.querySelectorAll('button');
+        const resultDiv = document.querySelector('#result');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const playerSelection = button.id;
+                const computerSelection = getComputerChoice();
+
+                playRound(playerSelection, computerSelection);
+            });
+        });
+
         console.log(playRound(playerSelection, computerSelection));
         console.log("Your Choice: " + playerSelection + "\n" + "Computer's Choice: " + computerSelection);
-        if (playRound(playerSelection, computerSelection) == "You Won!") { //If the returned message from playRound is 'You Win,' you score for yourself; otherwise, the computer will score.
+        if (playRound(playerSelection, computerSelection) == "You Won!") {
             yourScore += 1;
         } else if (playRound(playerSelection, computerSelection) == "You Lost!") {
             computerScore += 1;
         }
         console.log(yourScore, " X ",computerScore);
-    }
 
-    if (yourScore == computerScore) {
-        console.log("You drew this match!")
-    } else if (yourScore > computerScore) {
-        console.log("You won this match!")
-    } else if (yourScore < computerScore) {
-        console.log("You lost this match!")
-    }
 }
 
 game();
+
 
 
