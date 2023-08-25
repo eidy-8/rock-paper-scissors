@@ -7,6 +7,8 @@ function getComputerChoice() {
 
 }
 
+
+
 function playRound(playerSelection, computerSelection) {
 
     if (playerSelection == computerSelection) {
@@ -33,30 +35,53 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
 
-    var yourScore = 0;
-    var computerScore = 0;
+    let yourScore = 0;
+    let computerScore = 0;
+    const winningScore = 5;
 
-        const buttons = document.querySelectorAll('button');
-        const resultDiv = document.querySelector('#result');
-
+    const buttons = document.querySelectorAll("button");
+    const resultDiv = document.querySelector("#result");
+        
         buttons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener("click", function() {
                 const playerSelection = button.id;
                 const computerSelection = getComputerChoice();
 
-                playRound(playerSelection, computerSelection);
+                const roundResult = playRound(playerSelection, computerSelection); 
+
+                if (roundResult === "You Won!") {
+                    yourScore += 1;
+                } else if (roundResult === "You Lost!") {
+                    computerScore += 1;
+                }
+
+                resultDiv.innerHTML =   `Your Choice: ${playerSelection}
+                                        <br>Computer's Choice: ${computerSelection}
+                                        <br>Round Result: ${roundResult}
+                                        <br>Current Score: ${yourScore} X ${computerScore}`;
+
+                if (yourScore === winningScore){
+                    endGame("You won this game!", yourScore, computerScore);
+                } else if (computerScore === winningScore){
+                    endGame("You lost this game!", yourScore, computerScore);
+                }
             });
         });
 
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("Your Choice: " + playerSelection + "\n" + "Computer's Choice: " + computerSelection);
-        if (playRound(playerSelection, computerSelection) == "You Won!") {
-            yourScore += 1;
-        } else if (playRound(playerSelection, computerSelection) == "You Lost!") {
-            computerScore += 1;
-        }
-        console.log(yourScore, " X ",computerScore);
+}
 
+
+
+function endGame(message, y, c) {
+    const resultDiv = document.querySelector("#result");
+    resultDiv.innerHTML =   `${message}
+                            <br>Score: ${y} X ${c}`;
+
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(button => {
+        button.removeEventListener("click", playRound);
+        button.style.display = "none";
+    });
 }
 
 game();
